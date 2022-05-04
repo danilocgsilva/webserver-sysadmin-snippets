@@ -9,4 +9,6 @@ else
     do
         rm $i
     done
+
+    rm nginx-https.sh
 fi

@@ -1,0 +1,11 @@
+server {
+	listen 443 ssl;
+	listen [::]:443 ssl;
+	include snippets/self-signed.conf;
+	include snippets/ssl-params.conf;
+
+	server_name FULL_QUALIFIED_SERVER_NAME;
+
+	root /var/www/example.com/html;
+	index index.html index.htm index.nginx-debian.html;
+}
