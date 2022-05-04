@@ -1,13 +1,15 @@
 #!/bin/bash
 
-source server_files/statics/files_static.sh
-source get_user_options.sh
+MODULE_ADDRESS=../modules/nginx_ssl
 
-for i in "${FILES[@]}"; do
-    scp server_files/statics/$i $SERVER_USER@$SERVER_ADDRESS://home/$SERVER_USER
+source $MODULE_ADDRESS/server_files/statics/files_static.sh
+source $MODULE_ADDRESS/get_user_options.sh
+
+for i in "${FILES_STATIC[@]}"; do
+    scp $MODULE_ADDRESS/server_files/statics/$i $SERVER_USER@$SERVER_ADDRESS://home/$SERVER_USER
 done
 
-cat server_files/templates/nginx-https.template | \
+cat $MODULE_ADDRESS/server_files/templates/nginx-https.template | \
     sed s@=COUNTRY_NAME/@=$COUNTRY_NAME/@ | \
     sed s@=STATE_NAME/@=$STATE_NAME/@ | \
     sed s@=LOCAL_NAME/@=$LOCAL_NAME/@ | \
@@ -17,7 +19,7 @@ cat server_files/templates/nginx-https.template | \
     sed "s/=EMAIL_ADDRESS\//=$EMAIL_ADDRESS\//" | \
     tee /tmp/nginx-https.sh > /dev/null
 
-cat server_files/templates/create_server_block.template | \
+cat $MODULE_ADDRESS/server_files/templates/create_server_block.template | \
     sed "s/FULL_QUALIFIED_SERVER_NAME/$FULL_QUALIFIED_SERVER_NAME/g" | \
     tee /tmp/create_server_block.sh > /dev/null
 

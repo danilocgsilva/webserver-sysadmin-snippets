@@ -1,7 +1,7 @@
 while getopts "iu:h:c:s:l:o:v:f:e:" option; do
     case $option in
         i) # help (i to not conflit with host)
-            source 'help.sh'
+            source '../modules/nginx_ssl/help.sh'
             exit
             ;;
         u) # set a user to send files to the server

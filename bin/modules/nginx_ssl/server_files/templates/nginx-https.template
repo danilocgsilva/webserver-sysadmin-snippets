@@ -9,6 +9,7 @@ then
         -out /etc/ssl/certs/nginx-selfsigned.crt \
         -subj "/C=COUNTRY_NAME/ST=STATE_NAME/L=LOCAL_NAME/O=ORGANIZATION_NAME/OU=UNIT_NAME/CN=FULL_QUALIFIED_SERVER_NAME/emailAddress=EMAIL_ADDRESS/"
     source create_selfsigned.sh
+    source create_ssl_config.sh
     openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
 else
     echo I cannot write. May not proceed.
