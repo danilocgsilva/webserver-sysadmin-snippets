@@ -1,9 +1,7 @@
 #!/bin/bash
 
 source files/files.sh
-
-read -p "Type the server user: " SERVER_USER
-read -p "Type the server address: " SERVER_ADDRESS
+source get_server_connection_data.sh
 
 for i in "${FILES[@]}"
 do
