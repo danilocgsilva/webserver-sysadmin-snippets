@@ -7,7 +7,7 @@ then
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
         -keyout /etc/ssl/private/nginx-selfsigned.key \
         -out /etc/ssl/certs/nginx-selfsigned.crt \
-        -subj "/C=BR/ST=Sao\ Paulo/L=Sao\ Paulo/CN=danilocgsilva.me.local/"
+        -subj "/C=COUNTRY_NAME/ST=STATE_NAME/L=LOCAL_NAME/O=ORGANIZATION_NAME/OU=UNIT_NAME/CN=FULL_QUALIFIED_SERVER_NAME/EA=EMAIL_ADDRESS/"
     source create_selfsigned.sh
 else
     echo I cannot write. May not proceed.
