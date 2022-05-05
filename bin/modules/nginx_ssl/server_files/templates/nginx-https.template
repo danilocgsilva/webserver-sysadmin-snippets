@@ -2,18 +2,36 @@
 
 set -e
 
-if [ -w /etc/ssl/private ]
-then
+declare -a HALTS
+
+if [ ! -w /etc/ssl/private ]; then
+    HALTS+=("/etc/ssl/private must be writable.")
+fi
+
+if [ ! -w /etc/ssl/certs ]; then
+    HALTS+=("/etc/ssl/certs must be writable.")
+fi
+
+if [ ! -w /etc/nginx/snippets ]; then
+    HALTS+=("/etc/nginx/snippets")
+fi
+
+if [ ${#HALTS[@]} -eq 0 ]; then
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
         -keyout /etc/ssl/private/nginx-selfsigned.key \
         -out /etc/ssl/certs/nginx-selfsigned.crt \
-        -subj "/C=COUNTRY_NAME/ST=STATE_NAME/L=LOCAL_NAME/O=ORGANIZATION_NAME/OU=UNIT_NAME/CN=FULL_QUALIFIED_SERVER_NAME/emailAddress=EMAIL_ADDRESS/"
+        -subj "{SUBJECT}"
     source create_selfsigned.sh
     source create_ssl_config.sh
+    source create_server_block.sh
     openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+    ln -s /etc/nginx/sites-available/FULL_QUALIFIED_SERVER_NAME /etc/nginx/sites-enabled
+    sed -i "s/^\}/        return 302 https:\/\/\$server_name\$request_uri;\n}/g" /etc/nginx/sites-enabled/default
+    source clean.sh
+    /etc/init.d/nginx restart
 else
-    echo I cannot write. May not proceed.
+    echo "I cannot write in some directories. May not proceed. Check the write permission to the following directories:"
+    for i in "${HALTS[@]}"; do
+        echo "* $i"
+    done
 fi
-
-source clean.sh
-
