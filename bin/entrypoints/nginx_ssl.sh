@@ -19,6 +19,8 @@ cat $MODULE_ADDRESS/server_files/templates/nginx-https.template | \
     sed "s/=EMAIL_ADDRESS\//=$EMAIL_ADDRESS\//" | \
     tee /tmp/nginx-https.sh > /dev/null
 
+chmod +x /tmp/nginx-https.sh
+
 cat $MODULE_ADDRESS/server_files/templates/create_server_block.template | \
     sed "s/FULL_QUALIFIED_SERVER_NAME/$FULL_QUALIFIED_SERVER_NAME/g" | \
     tee /tmp/create_server_block.sh > /dev/null

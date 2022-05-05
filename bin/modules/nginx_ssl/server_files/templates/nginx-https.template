@@ -10,10 +10,11 @@ then
         -subj "/C=COUNTRY_NAME/ST=STATE_NAME/L=LOCAL_NAME/O=ORGANIZATION_NAME/OU=UNIT_NAME/CN=FULL_QUALIFIED_SERVER_NAME/emailAddress=EMAIL_ADDRESS/"
     source create_selfsigned.sh
     source create_ssl_config.sh
+    source create_server_block.sh
     openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+    source clean.sh
 else
     echo I cannot write. May not proceed.
 fi
 
-source clean.sh
 
