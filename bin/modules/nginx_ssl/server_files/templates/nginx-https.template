@@ -27,6 +27,7 @@ if [ ${#HALTS[@]} -eq 0 ]; then
     openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
     ln -s /etc/nginx/sites-available/FULL_QUALIFIED_SERVER_NAME /etc/nginx/sites-enabled
     sed -i "s/^\}/        return 302 https:\/\/\$server_name\$request_uri;\n}/g" /etc/nginx/sites-enabled/default
+    sed -i "s/server_name _/server_name FULL_QUALIFIED_SERVER_NAME/g" /etc/nginx/sites-enabled/default
     source clean.sh
     /etc/init.d/nginx restart
 else
