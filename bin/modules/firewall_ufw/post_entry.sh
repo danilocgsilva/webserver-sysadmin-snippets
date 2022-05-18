@@ -1,0 +1,1 @@
+echo "Now, executes the file set_firewall.sh to make the ufw setup."

@@ -1,4 +1,4 @@
-while getopts "iu:h:c:s:l:o:v:f:e:" option; do
+while getopts "iu:h:c:s:l:o:v:f:e:g:" option; do
     case $option in
         i) # help (i to not conflit with host)
             HELP=1
@@ -30,17 +30,24 @@ while getopts "iu:h:c:s:l:o:v:f:e:" option; do
         e) # Email address
             EMAIL_ADDRESS=$OPTARG
             ;;
+        g) # Local files, not send to server
+            TO_LOCAL=$OPTARG
+            ;;
     esac
 done
 
 if [ ! "$HELP" = 1 ]; then
 
-  if [ -z $SERVER_USER ]; then
-      read -p "Type the server user: " SERVER_USER
-  fi
+  if [ -z $TO_LOCAL ]; then
 
-  if [ -z $SERVER_ADDRESS ]; then
-      read -p "Type the server address: " SERVER_ADDRESS
+    if [ -z $SERVER_USER ]; then
+        read -p "Type the server user: " SERVER_USER
+    fi
+
+    if [ -z $SERVER_ADDRESS ]; then
+        read -p "Type the server address: " SERVER_ADDRESS
+    fi
+
   fi
 
   if [ -z $COUNTRY_NAME ]; then

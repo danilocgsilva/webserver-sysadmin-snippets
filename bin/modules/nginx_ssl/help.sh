@@ -10,5 +10,6 @@ as options:
 -v <unit_name>: the organization unit name
 -f <full_qualified_name>: the full qualified name for your server
 -e <email_address>: the e-mail address
+-g <local_path>: if setted, saves the files locally instead of sending to server 
 -i: print this help.
 """

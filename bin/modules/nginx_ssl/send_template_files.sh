@@ -21,8 +21,14 @@ cat $MODULE_ADDRESS/server_files/templates/create_server_block.template | \
     sed "s/FULL_QUALIFIED_SERVER_NAME/$FULL_QUALIFIED_SERVER_NAME/g" | \
     tee /tmp/create_server_block.sh > /dev/null
 
-scp /tmp/nginx-https.sh $SERVER_USER@$SERVER_ADDRESS://home/$SERVER_USER
-rm /tmp/nginx-https.sh
+if [ -z $TO_LOCAL ]; then
+    scp /tmp/nginx-https.sh $SERVER_USER@$SERVER_ADDRESS://home/$SERVER_USER
+    scp /tmp/create_server_block.sh $SERVER_USER@$SERVER_ADDRESS://home/$SERVER_USER
+else
+    cp /tmp/nginx-https.sh $TO_LOCAL/
+    cp /tmp/create_server_block.sh $TO_LOCAL/
+fi
 
-scp /tmp/create_server_block.sh $SERVER_USER@$SERVER_ADDRESS://home/$SERVER_USER
+rm /tmp/nginx-https.sh
 rm /tmp/create_server_block.sh
+
